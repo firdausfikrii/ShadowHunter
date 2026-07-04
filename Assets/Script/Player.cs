@@ -1,44 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("References")]
+    public CharacterController controller;
     public Transform cam;
+    public Animator animator;
 
-    [SerializeField]
-    private float _velocity = 10;
+    [Header("Movement")]
+    public float speed = 5f;
 
-    [SerializeField]
-    private Animator _animator;
-    private CharacterController _characterController;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _characterController = GetComponent<CharacterController>();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 moveAxis = new Vector3(horizontal, 0f, vertical);
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 input = new Vector3(h, 0f, v).normalized;
 
-        if (direction.magnitude >= 0.1f)
+        // kalau tidak ada input → stop animasi & return
+        if (input.magnitude < 0.1f)
         {
-            float targetAngle =
-                Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-            _characterController.SimpleMove(moveDir.normalized * _velocity);
+            animator.SetBool("isMoving", false);
+            return;
         }
-        _animator.SetBool("isMoving", moveAxis.magnitude > 0);
+
+        // arah relative camera (lebih aman pakai forward/right)
+        Vector3 camForward = cam.forward;
+        Vector3 camRight = cam.right;
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+
+        Vector3 moveDir = camForward * input.z + camRight * input.x;
+
+        // gerak player
+        controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+        // rotasi player ke arah jalan
+        transform.forward = moveDir.normalized;
+
+        // animasi
+        animator.SetBool("isMoving", true);
     }
 }

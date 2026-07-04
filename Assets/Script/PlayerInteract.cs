@@ -1,29 +1,26 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    public GameObject interactionText;
-
     public float distance = 3f;
-
-    void Start()
-    {
-        interactionText.SetActive(true);
-    }
+    public GameObject interactionText;
 
     void Update()
     {
-        if (UIManager.Instance.IsUIOpen)
+        Camera cam = Camera.main;
+
+        if (cam == null)
             return;
-        
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * 5f, Color.red);
+
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, distance))
         {
-            Interactable interact = hit.collider.GetComponent<Interactable>();
+            Interactable interact = hit.collider.GetComponentInParent<Interactable>();
 
             if (interact != null)
             {

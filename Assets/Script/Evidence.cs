@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Evidence : MonoBehaviour
 {
-    private bool collected = false;
+    private bool collected;
+
+    [Header("Reward")]
+    public int scoreReward = 50;
 
     public void Collect()
     {
@@ -11,8 +14,17 @@ public class Evidence : MonoBehaviour
 
         collected = true;
 
+        // Tambah Score
+        ScoreManager.Instance.AddScore(scoreReward);
+        FeedbackManager.Instance.ShowFeedback("+50 Score", Color.yellow);
+
+        // Tambah Progress Mission
         MissionManager.Instance.AddEvidence();
 
-        Debug.Log("Bukti tersimpan");
+        // Tutup UI Evidence
+        UIManager.Instance.CloseCurrentUI();
+
+        // Evidence tidak bisa diambil lagi
+        gameObject.SetActive(false);
     }
 }
