@@ -10,6 +10,8 @@ public class MissionManager : MonoBehaviour
     public TMP_Text objectiveText;
     public TMP_Text progressText;
 
+    public Interactable chiefInteractable;
+
     private int evidenceFound = 0;
     private int totalEvidence = 3;
 
@@ -47,11 +49,14 @@ public class MissionManager : MonoBehaviour
 
         if (evidenceFound >= totalEvidence)
         {
-            objectiveText.text = "Semua bukti ditemukan!";
+            AudioManager.Instance.PlayVictoryMusic();
+            objectiveText.text = "Temui Chief";
 
             ScoreManager.Instance.AddScore(100);
 
             FeedbackManager.Instance.ShowFeedback("MISSION COMPLETE\n+100 Bonus", Color.cyan);
+
+            chiefInteractable.canInteract = true;
         }
     }
 

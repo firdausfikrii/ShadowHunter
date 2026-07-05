@@ -4,42 +4,46 @@ public class Player : MonoBehaviour
 {
     [Header("References")]
     public CharacterController controller;
-    public Transform cam;
+    public Transform cameraPivot;
     public Animator animator;
 
     [Header("Movement")]
     public float speed = 5f;
 
+    [Header("Mouse")]
+    public float sensitivity = 2f;
+
+    private float xRotation;
+
     void Update()
+    {
+        Look();
+        Move();
+    }
+
+    void Look()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+
+        cameraPivot.localRotation = Quaternion.Euler(xRotation, 0, 0);
+    }
+
+    void Move()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 input = new Vector3(h, 0f, v).normalized;
+        Vector3 moveDir = transform.forward * v + transform.right * h;
 
-        // kalau tidak ada input → stop animasi & return
-        if (input.magnitude < 0.1f)
-        {
-            animator.SetBool("isMoving", false);
-            return;
-        }
-
-        // arah relative camera (lebih aman pakai forward/right)
-        Vector3 camForward = cam.forward;
-        Vector3 camRight = cam.right;
-
-        camForward.y = 0f;
-        camRight.y = 0f;
-
-        Vector3 moveDir = camForward * input.z + camRight * input.x;
-
-        // gerak player
         controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-        // rotasi player ke arah jalan
-        transform.forward = moveDir.normalized;
-
         // animasi
-        animator.SetBool("isMoving", true);
+        animator.SetBool("isMoving", moveDir.magnitude > 0.1f);
     }
 }

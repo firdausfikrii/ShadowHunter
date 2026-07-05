@@ -31,7 +31,7 @@ public class UILVL3Manager : MonoBehaviour
     {
         laptop.SetActive(true);
 
-        MissionManagerLVL3.Instance.ShowObjective("Periksa Marketplace");
+        MissionManagerLVL3.Instance.ShowObjective("Periksa Marketplace dengan laptop");
     }
 
     public void MarketplaceCompleted()
@@ -43,6 +43,6 @@ public class UILVL3Manager : MonoBehaviour
 
     public void VictimCompleted()
     {
-        MissionManagerLVL3.Instance.ShowObjective("Kembali ke Meja Analisis");
+        MissionManagerLVL3.Instance.ShowObjective("Pergi ke Meja Analisis");
     }
 }

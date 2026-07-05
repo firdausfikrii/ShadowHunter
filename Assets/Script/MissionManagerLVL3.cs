@@ -16,7 +16,7 @@ public class MissionManagerLVL3 : MonoBehaviour
     private void Start()
     {
         objectiveUI.SetActive(true);
-        objectiveText.text = "Temukan Penyebab Marketplace Scam";
+        objectiveText.text = "Periksa Berkas Korban";
         UpdateProgress();
     }
 
@@ -32,7 +32,7 @@ public class MissionManagerLVL3 : MonoBehaviour
     {
         evidenceFound = 0;
 
-        objectiveText.text = "Temukan Penyebab Marketplace Scam";
+        objectiveText.text = "Periksa Berkas Korban";
         progressText.gameObject.SetActive(true);
 
         UpdateProgress();
@@ -48,6 +48,7 @@ public class MissionManagerLVL3 : MonoBehaviour
 
         if (evidenceFound >= totalEvidence)
         {
+            AudioManager.Instance.PlayVictoryMusic();
             objectiveText.text = "Kembali ke Meja Analisis";
 
             ScoreManager.Instance.AddScore(100);

@@ -26,6 +26,8 @@ public class IntroManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayGameplayMusic();
+        
         playerMovement.enabled = false;
 
         gameplayCamera.gameObject.SetActive(false);

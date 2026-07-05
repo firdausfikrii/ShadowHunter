@@ -25,16 +25,20 @@ public class LifeManager : MonoBehaviour
 
     public void LoseLife()
     {
+        // Kalau sudah Game Over, jangan kurangi nyawa lagi
         if (currentLife <= 0)
             return;
 
+        // Kurangi nyawa
         currentLife--;
 
+        // Update tampilan hati
         UpdateLifeUI();
 
+        // Cek apakah nyawa habis
         if (currentLife <= 0)
         {
-            GameOver();
+            GameOverManager.Instance.ShowGameOver();
         }
     }
 

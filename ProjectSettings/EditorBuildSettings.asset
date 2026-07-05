@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MenuUtama.unity
+    guid: 931d6a4721a38624aa33921ba4bb88d7
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 699f9aaaad129c1489a518da95099fe0
+  - enabled: 1
+    path: Assets/Scenes/QRTrapLevel.unity
+    guid: 7dc26321d922b2146845387238c01919
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
