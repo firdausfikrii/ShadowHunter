@@ -122,4 +122,10 @@ public class UIManager : MonoBehaviour
         if (player != null)
             player.enabled = state;
     }
+
+    public void HideCurrentUI()
+    {
+        if (currentUI != null)
+            currentUI.SetActive(false);
+    }
 }

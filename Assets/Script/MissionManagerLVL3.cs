@@ -1,9 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public class MissionManager : MonoBehaviour
+public class MissionManagerLVL3 : MonoBehaviour
 {
-    public static MissionManager Instance;
+    public static MissionManagerLVL3 Instance;
 
     [Header("UI")]
     public GameObject objectiveUI;
@@ -11,11 +11,12 @@ public class MissionManager : MonoBehaviour
     public TMP_Text progressText;
 
     private int evidenceFound = 0;
-    private int totalEvidence = 3;
+    private int totalEvidence = 4;
 
     private void Start()
     {
         objectiveUI.SetActive(true);
+        objectiveText.text = "Temukan Penyebab Marketplace Scam";
         UpdateProgress();
     }
 
@@ -31,7 +32,7 @@ public class MissionManager : MonoBehaviour
     {
         evidenceFound = 0;
 
-        objectiveText.text = "Cari 3 Bukti";
+        objectiveText.text = "Temukan Penyebab Marketplace Scam";
         progressText.gameObject.SetActive(true);
 
         UpdateProgress();
@@ -47,7 +48,7 @@ public class MissionManager : MonoBehaviour
 
         if (evidenceFound >= totalEvidence)
         {
-            objectiveText.text = "Semua bukti ditemukan!";
+            objectiveText.text = "Kembali ke Meja Analisis";
 
             ScoreManager.Instance.AddScore(100);
 
@@ -68,7 +69,7 @@ public class MissionManager : MonoBehaviour
         objectiveUI.SetActive(true);
 
         objectiveText.text = text;
-        progressText.gameObject.SetActive(false);
+        progressText.gameObject.SetActive(true);
     }
 
     public void HideObjective()

@@ -42,11 +42,11 @@ public class IntroManager : MonoBehaviour
 
     IEnumerator PlayRadioThenChief()
     {
-        // Putar radio
-        radioAudio.Play();
-
-        // Tunggu radio selesai
-        yield return new WaitWhile(() => radioAudio.isPlaying);
+        if (radioAudio != null)
+        {
+            radioAudio.Play();
+            yield return new WaitWhile(() => radioAudio.isPlaying);
+        }
 
         // Chief mulai bicara
         chiefAnimator.SetBool("IsTalking", true);
